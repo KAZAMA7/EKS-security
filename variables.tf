@@ -1,13 +1,13 @@
 variable "my-access-key" {
   sensitive = true
   type = string
-  default = "AKIARGLZVIRMGAE5NFDUCUNRUFNCHRNCYXGSXTVTWXVTWVTFVWSAW"
+  default = "AKIA3YK5LKNVXUW2XCUG"
 }
 
 variable "my-secret-key" {
   sensitive = true
   type = string
-  default = "i4ZoVL0rIfhrufryhbygbtybdeunudenuhn3KjN4e6pZRBUkhZP+3myr96nbI51vou"
+  default = "KwTcaZ/cyaIHINvvg9o3pqXbYDjWVM1Yu14rP46Z"
 }
 
 variable "eks-cluster-name" {

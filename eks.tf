@@ -20,39 +20,26 @@ module "eks" {
   }
 
   vpc_id                   = module.vpc.vpc_id
-  subnet_ids               = module.vpc.public_subnets
+  subnet_ids               = module.vpc.private_subnets
   control_plane_subnet_ids = module.vpc.private_subnets
 
-  # Fargate Profile(s)
-  fargate_profiles = {
-    default = {
-      name = "default"
-      selectors = [
-        {
-          namespace = "*"
-        }
-      ]
+# EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    instance_types = ["t2.medium", "t2.micro", "t3.medium", "t3.micro" ]
+  }
+
+  eks_managed_node_groups = {
+
+    green = {
+      min_size     = 1
+      max_size     = 10
+      desired_size = 1
+
+      instance_types = ["t3.medium"]
+      capacity_type  = "ON_DEMAND"
     }
   }
 
-  # aws-auth configmap
-  manage_aws_auth_configmap = true
-
-  aws_auth_roles = [
-    {
-      rolearn  = var.aws_auth_roles_rolearn
-      username = "AWSServiceRoleForAmazonEKS"
-      groups   = ["system:masters"]
-    },
-  ]
-
-  aws_auth_users = [
-    {
-      userarn  = aws_iam_user.user.arn
-      username = aws_iam_user.user.id
-      groups   = ["system:masters"]
-    }
-  ]
 
   tags = {
     Environment = "dev"
